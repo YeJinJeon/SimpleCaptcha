@@ -2,6 +2,7 @@ package sc;
 import java.io.File;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.awt.Font;
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -13,6 +14,8 @@ import nl.captcha.backgrounds.GradiatedBackgroundProducer;
 import nl.captcha.gimpy.DropShadowGimpyRenderer;
 import nl.captcha.text.producer.DefaultTextProducer;
 import nl.captcha.text.renderer.DefaultWordRenderer;
+import nl.captcha.text.renderer.WordRenderer;
+import sc.FixedWordRenderer;
 
 
 public class HelloSimpleCaptcha {
@@ -24,15 +27,15 @@ public class HelloSimpleCaptcha {
 		int font_size = 40;
 		List<Font> fontList = new ArrayList<Font>();
 		fontList.add(new Font("¸¼Àº °íµñ", Font.BOLD, font_size));
-		//fontList.add(new Font("µ¸¿òÃ¼", Font.BOLD, font_size));
-		//fontList.add(new Font("HY±×·¡ÇÈM", Font.BOLD, font_size));
+		fontList.add(new Font("Gadugi", Font.BOLD, font_size));
+		fontList.add(new Font("Arial Narrow", Font.BOLD, font_size));
 		List<Color> colorList = new ArrayList<Color>(); 
 		colorList.add(Color.BLACK);
 		
-		for(int i=0; i<500; i++) {
+		for(int i=0; i<250; i++) {
 			try {
 			    Captcha captcha = new Captcha.Builder(width, height)
-			    .addText(new DefaultWordRenderer(colorList, fontList))
+			    .addText(new FixedWordRenderer(colorList, fontList))
 			    .addNoise().addNoise()
 			    .addBorder()
 			    .gimp(new DropShadowGimpyRenderer()).gimp()
@@ -41,7 +44,7 @@ public class HelloSimpleCaptcha {
 			    
 			    String answer = captcha.getAnswer();
 			    
-			    File file = new File("C:/Users/tanker002/data/captcha/"+answer+".png");
+			    File file = new File("C:/Users/samsung/tanker/data/simplecaptcha/test/"+answer+".png");
 			    try {
 			    	ImageIO.write(captcha.getImage(), "png", file);
 			    } catch(IOException e) {
